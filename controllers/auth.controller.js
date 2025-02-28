@@ -8,6 +8,8 @@ import { generateAndSendPasswordResetOTP, sendVerificationEmail } from "../utils
 import VerificationToken from "../models/VerificationToken.model.js";
 import ResetOTP from "../models/resetOTP.model.js";
 import crypto from 'crypto'
+import jwt from 'jsonwebtoken';
+
 
 
 
@@ -502,6 +504,41 @@ const resendVerificationEmail = async (req, res, next) => {
         return next(error);
     }
     }
+// getUser  
+const getUser = async (req, res) => {
+    const token = req.cookies?.token;
+
+    if (!token) {
+        return res.status(401).json({
+            success: false,
+            message: "Unauthorized - No token provided"
+        });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await User.findById(decoded.id).select('-personal_info.password');
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            user
+        });
+
+    } catch (error) {
+        console.error("JWT Verification Failed:", error.message);
+        return res.status(401).json({
+            success: false,
+            message: "Unauthorized - Invalid or expired token"
+        });
+    }
+};
 
 export { 
     signupUser, 
@@ -514,5 +551,6 @@ export {
     resendOTP,
     googleAuth,
     adminRoute,
-    resendVerificationEmail
+    resendVerificationEmail,
+    getUser
 }

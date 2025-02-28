@@ -10,6 +10,7 @@ import {
     signoutUser, 
     signupUser, 
     verifyOTP, 
+    getUser,
     verifyUser } from "../controllers/auth.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
 import isAdmin from "../middlewares/admin.middleware.js";
@@ -47,6 +48,8 @@ router.post('/google-auth', googleAuth);
 
 // private routes
 router.post('/resetPassword', protect, resetPassword);
+
+router.get('/getUser', getUser)
 
 // Admin routes
 router.get('/admin', protect, isAdmin,  adminRoute);
