@@ -14,7 +14,7 @@ dotenv.config();
 
 // Enable CORS for all routes
 app.use(cors({
-    origin: 'https://shoppy-cx1x.onrender.com/', // Replace with your frontend's URL
+    origin: 'https://shoppy-cx1x.onrender.com', // Replace with your frontend's URL
     credentials: true, // Allow credentials (cookies)
 }));
 // app.use(cors()); 

@@ -41,7 +41,7 @@ const signupUser = async (req, res, next) => {
         //check if the user already exists in the database
         const emailExists = await User.findOne({"personal_info.email":email});
         const usernameExists = await User.findOne({"personal_info.username": username});
-        const phoneNumberExists = await User.findOne({"personal_info.phone_number": phone_number});
+        // const phoneNumberExists = await User.findOne({"personal_info.phone_number": phone_number});
 
 
         if(usernameExists){
@@ -50,9 +50,7 @@ const signupUser = async (req, res, next) => {
         if(emailExists){
             return next(handleError(403, "Email is already in use"));         
         }       
-        if(phoneNumberExists){
-            return next(handleError(403, "Phone number is already in use"));         
-        }       
+             
 
         // Hash the password
         const saltRounds = 10;
@@ -66,7 +64,7 @@ const signupUser = async (req, res, next) => {
             personal_info:{            
                 username,
                 email,
-                phone_number, 
+                 
                 gender,                
                 password: hashedPassword            
             }                 
