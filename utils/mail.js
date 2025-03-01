@@ -46,46 +46,46 @@ const generateAndSendPasswordResetOTP = async(user) => {
     }
 }
 
-// const sendVerificationEmail = async (user) => {
-//     try{
-//         // destructure the user
-//         const { personal_info: { username, email}, _id:userId} = user;  
+const sendVerificationEmail = async (user) => {
+    try{
+        // destructure the user
+        const { personal_info: { username, email}, _id:userId} = user;  
         
-//         // Delete verification token from the database
-//         await VerificationToken.deleteOne({ owner: userId  });
+        // Delete verification token from the database
+        await VerificationToken.deleteOne({ owner: userId  });
         
-//         // Generate a random string for verification token
-//         const unhashedToken = crypto.randomBytes(32).toString('hex');
-//         console.log({unhashedToken})
+        // Generate a random string for verification token
+        const unhashedToken = crypto.randomBytes(32).toString('hex');
+        console.log({unhashedToken})
 
-//         // Hash the verification token
-//         const hashedToken = crypto.createHash('sha256').update(unhashedToken).digest('hex');
+        // Hash the verification token
+        const hashedToken = crypto.createHash('sha256').update(unhashedToken).digest('hex');
 
-//         const verificationToken = new VerificationToken({
-//             owner: userId,
-//             token: hashedToken,
-//             createdAt: Date.now(),
-//             expiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
-//         })
+        const verificationToken = new VerificationToken({
+            owner: userId,
+            token: hashedToken,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+        })
         
-//         await verificationToken.save();
+        await verificationToken.save();
 
-//         // Include the verification token in the link sent to the user's email
-//         const verificationLink = `http://localhost:5173/verifyUser/${userId}/verify/${unhashedToken}`;
+        // Include the verification token in the link sent to the user's email
+        const verificationLink = `https://shoppy-cx1x.onrender.com/verifyUser/${userId}/verify/${unhashedToken}`;
 
-//         // Send a mail to the users email address
-//          const mailOptions = {
-//             from:`"Shophere" <divinegiftjohnson21@gmail.com>`,
-//             to: email,
-//             subject: 'Verify your Email',
-//             html: generateVerificationLinkTemplate(username, verificationLink)
-//         }
-//         await  sendEmail(mailOptions)
+        // Send a mail to the users email address
+         const mailOptions = {
+            from:`"Shophere" <divinegiftjohnson21@gmail.com>`,
+            to: email,
+            subject: 'Verify your Email',
+            html: generateVerificationLinkTemplate(username, verificationLink)
+        }
+        await  sendEmail(mailOptions)
 
-//     }catch(error){
-//         throw error;
-//     }
-// }
+    }catch(error){
+        throw error;
+    }
+}
 
 
 const generateOTP = () => {
