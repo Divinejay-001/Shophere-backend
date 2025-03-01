@@ -71,7 +71,7 @@ const sendVerificationEmail = async (user) => {
         await verificationToken.save();
 
         // Include the verification token in the link sent to the user's email
-        const verificationLink = `https://shoppy-cx1x.onrender.com/verifyUser/${userId}/verify/${unhashedToken}`;
+        const verificationLink = `https://shoppy-cx1x.onrender.com/verifyUser`;
 
         // Send a mail to the users email address
          const mailOptions = {

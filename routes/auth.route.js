@@ -38,7 +38,7 @@ router.post('/verifyOTP', verifyOTP);
 router.get('/resendVerificationMail/:id', resendVerificationEmail);
 
 // verify User
-router.get('/:id/verify/:token', verifyUser);
+router.get('/verifyUser', verifyUser);
 
 // Create or Reset Session
 router.get('/resendOTP', resendOTP);
