@@ -468,40 +468,40 @@ const verifyUser = async (req, res, next) => {
 // @desc Login a User
 // @route GET /api/auth/resendVerificationMail/:id
 // @access Public
-const resendVerificationEmail = async (req, res, next) => {
-    try {
-        const { id: userId } = req.params; 
+// const resendVerificationEmail = async (req, res, next) => {
+//     try {
+//         const { id: userId } = req.params; 
     
-        // check if user exists
-        const user = await User.findById(userId);
+//         // check if user exists
+//         const user = await User.findById(userId);
     
-        if(!user){
-           return  next(handleError(403, 'User dosent exist'))
-        }
-        generateTokenAndSetCookie(res, userId);
+//         if(!user){
+//            return  next(handleError(403, 'User dosent exist'))
+//         }
+//         generateTokenAndSetCookie(res, userId);
     
-        await sendVerificationEmail(user); 
+//         await sendVerificationEmail(user); 
     
-        const { personal_info: { username:user_username, email:user_email, profile_img}, role, _id, isVerified} = user
+//         const { personal_info: { username:user_username, email:user_email, profile_img}, role, _id, isVerified} = user
     
-        return res.status(200).json({
-            success: true,
-            status: 'verification pending', 
-            statusCode:200,
-            message: `verification link sent to your email'`,
-            user:{
-                username: user_username,                
-                profile_img, 
-                userId:_id,
-                role,
-                isVerified
-            },            
-        })         
+//         return res.status(200).json({
+//             success: true,
+//             status: 'verification pending', 
+//             statusCode:200,
+//             message: `verification link sent to your email'`,
+//             user:{
+//                 username: user_username,                
+//                 profile_img, 
+//                 userId:_id,
+//                 role,
+//                 isVerified
+//             },            
+//         })         
     
-    }catch(error){
-        return next(error);
-    }
-    }
+//     }catch(error){
+//         return next(error);
+//     }
+//     }
 // getUser  
 const getUser = async (req, res) => {
     const token = req.cookies?.token;
@@ -549,6 +549,6 @@ export {
     resendOTP,
     googleAuth,
     adminRoute,
-    resendVerificationEmail,
+    // resendVerificationEmail,
     getUser
 }
